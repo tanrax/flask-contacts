@@ -118,8 +118,6 @@ def search():
 def contacts_delete():
     '''
     Delete contact
-
-    :param id: Id from contact
     '''
     try:
         mi_contacto = Contact.query.filter_by(id=request.form['id']).first()
