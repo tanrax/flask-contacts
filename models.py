@@ -18,11 +18,5 @@ class Contact(db.Model):
     email = db.Column(db.String(200), nullable=True, unique=True)
     phone = db.Column(db.String(20), nullable=True, unique=False)
 
-    def __init__(self, name, surname, email, phone):
-        self.name = name
-        self.surname = surname
-        self.email = email
-        self.phone = phone
-
     def __repr__(self):
         return '<Contacts %r>' % self.name

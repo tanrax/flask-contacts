@@ -4,7 +4,8 @@ from forms import ContactForm
 
 # Flask
 app = Flask(__name__)
-app.secret_key = 'my secret'
+app.config['SECRET_KEY'] = 'my secret'
+app.config['DEBUG'] = True
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
@@ -27,11 +28,11 @@ def new_contact():
     Create new contact
     '''
     form = ContactForm()
-    if form.validate_on_submit():        
+    if form.validate_on_submit():
+        my_contact = Contact()
+        form.populate_obj(my_contact)
+        db.session.add(my_contact)
         try:
-            my_contact = Contact()
-            form.populate_obj(my_contact)
-            db.session.add(my_contact)
             db.session.commit()
             # User info
             flash('Contact created correctly', 'success')
@@ -51,11 +52,11 @@ def edit_contact(id):
     :param id: Id from contact
     '''
     my_contact = Contact.query.filter_by(id=id).first()
-    form = ContactForm(obj=my_contact)        
+    form = ContactForm(obj=my_contact)
     if form.validate_on_submit():
         try:
             # Update contact
-            form.populate_obj(my_contact)            
+            form.populate_obj(my_contact)
             db.session.add(my_contact)
             db.session.commit()
             # User info
@@ -107,5 +108,4 @@ def contacts_delete():
 
 
 if __name__ == "__main__":
-    app.debug = True
     app.run()
