@@ -6,8 +6,8 @@ from wtforms.fields.html5 import TelField as _TelField, EmailField as _EmailFiel
 class AddArgsMixin(object):
     _field_args = {}
 
-    def __init__(self, name, field_args, *args, **kwargs):
-        self._field_args = field_args                                
+    def __init__(self, name, field_args=None, *args, **kwargs):
+        self._field_args = field_args or {}                                
         super(AddArgsMixin, self).__init__(name, *args, **kwargs)
 
 class StringField(AddArgsMixin, _StringField):
