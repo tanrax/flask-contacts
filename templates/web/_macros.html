@@ -1,0 +1,15 @@
+{% macro render_field(field, kwargs) %}
+    {% if field.label.text != 'CSRF Token' and field.type != 'SubmitField' %}
+	    <div class="form-group{%if field.errors %} has-error{% endif %}">
+			{% if field.label.text %}		
+		    	{% if field.flags.required %}<span style="color:red; font-size:22px;">*</span>{% endif %} {{ field.label }}
+			{% endif %}
+		    {{ field(**kwargs) }}
+		    {% for error in field.errors %}
+			    <span class="help-block">{{ error }}</span>
+		    {% endfor %}
+	    </div>
+    {% elif field.type == 'SubmitField' %}
+        {{ field(**kwargs) }}
+    {% endif %}
+{% endmacro %}

@@ -1,37 +1,4 @@
-{% extends 'layouts/master.html' %}
+{% extends 'web/contact_form.html' %}
 {% block title %}Edit contact{% endblock %}
-{% block body %}
-<h1>Edit contact</h1>
-<form method="post">
-	{{ form.csrf_token }}
-	<div class="form-group{%if form.name.errors %} has-error{% endif %}">
-		{{ form.name.label }} 
-		{{ form.name(class='form-control', value=my_contact.name) }}
-		{% for error in form.name.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.surname.errors %} has-error{% endif %}">
-		{{ form.surname.label }} 
-		{{ form.surname(class='form-control', value=my_contact.surname) }}
-		{% for error in form.surname.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.email.errors %} has-error{% endif %}">
-		{{ form.email.label }} 
-		{{ form.email(class='form-control', value=my_contact.email) }}
-		{% for error in form.email.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.phone.errors %} has-error{% endif %}">
-		{{ form.phone.label }} 
-		{{ form.phone(class='form-control', value=my_contact.phone) }}
-		{% for error in form.phone.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<input type="submit" class="btn btn-success" value="Save">
-</form>
-{% endblock %}
+{% block form_action %}{{ url_for('edit_contact', id=contact_id) }}{% endblock %}
+	
