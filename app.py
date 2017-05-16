@@ -27,15 +27,10 @@ def new_contact():
     Create new contact
     '''
     form = ContactForm()
-    if form.validate_on_submit():
-        # Get form
-        name = form.name.data
-        surname = form.surname.data
-        email = form.email.data
-        phone = form.phone.data
-        # Save in database
+    if form.validate_on_submit():        
         try:
-            my_contact = Contact(name, surname, email, phone)
+            my_contact = Contact()
+            form.populate_obj(my_contact)
             db.session.add(my_contact)
             db.session.commit()
             # User info
