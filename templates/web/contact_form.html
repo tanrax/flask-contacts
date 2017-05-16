@@ -1,0 +1,12 @@
+{% extends 'layouts/master.html' %}
+{% from "web/_macros.html" import render_field %}
+
+{% block body %}
+<h1>{{ self.title() }}</h1>
+<form action="{% block form_action %}{% endblock %}" method="post">
+	{{ form.csrf_token }}
+	{% for field in form %}
+		{{ render_field(field, field._field_args) }}
+	{% endfor %}	
+</form>
+{% endblock %}

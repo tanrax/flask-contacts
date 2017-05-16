@@ -1,20 +1,3 @@
-{% extends 'layouts/master.html' %}
+{% extends 'web/contact_form.html' %}
 {% block title %}Edit contact{% endblock %}
-{% block body %}
-<h1>Edit contact</h1>
-<form method="post">
-	{{ form.csrf_token }}
-	{% for field in form %}
-		{% if field.label.text != 'CSRF Token' %}
-		<div class="form-group{%if field.errors %} has-error{% endif %}">
-			{{ field.label }} 
-			{{ field(class='form-control') }}
-			{% for error in field.errors %}
-				<span class="help-block">{{ error }}</span>
-			{% endfor %}
-		</div>
-		{% endif %}
-	{% endfor %}
-	<input type="submit" class="btn btn-success" value="Save">
-</form>
-{% endblock %}
+{% block form_action %}{{ url_for('edit_contact', id=contact_id) }}{% endblock %}

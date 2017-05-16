@@ -10,6 +10,11 @@ app.secret_key = 'my secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+@app.context_processor
+def add_lang_to_templates():
+    return {'lang': 'en'}
+
 db.init_app(app)
 
 
@@ -54,37 +59,38 @@ def edit_contact(id):
     Edit contact
 
     :param id: Id from contact
-    '''
+    '''    
+    rtn = None
     my_contact = Contact.query.filter_by(id=id).first()
-    form = ContactForm(
-        name=my_contact.name,
-        surname=my_contact.surname,
-        email=my_contact.email,
-        phone=my_contact.phone
-    )
-    if form.validate_on_submit():
-        # Get form
-        name = form.name.data
-        surname = form.surname.data
-        email = form.email.data
-        phone = form.phone.data
-
-        try:
-            # Update contact
-            my_contact.name = name
-            my_contact.surname = surname
-            my_contact.email = email
-            my_contact.phone = phone
-            db.session.add(my_contact)
-            db.session.commit()
-            # User info
-            flash('Saved successfully', 'success')
-        except:
-            db.session.rollback()
-            flash('Error update contact.', 'danger')
-    return render_template(
+    if request.method.lower() == 'get':
+        form = ContactForm(obj=my_contact)
+    else:
+        form = ContactForm()
+        if form.validate_on_submit():
+            form.populate_obj(my_contact)
+            # Get form
+            name = form.name.data
+            surname = form.surname.data
+            email = form.email.data
+            phone = form.phone.data
+            try:
+                # Update contact
+                my_contact.name = name
+                my_contact.surname = surname
+                my_contact.email = email
+                my_contact.phone = phone
+                db.session.add(my_contact)
+                db.session.commit()
+                # User info
+                flash('Saved successfully', 'success')
+                rtn = redirect(url_for('index'))
+            except:
+                db.session.rollback()
+                flash('Error updating contact.', 'danger')    
+    return rtn if rtn is not None else render_template(
         'web/edit_contact.html',
-        form=form)
+        form=form,
+        contact_id=my_contact.id)
 
 
 @app.route("/contacts")
@@ -127,4 +133,4 @@ def contacts_delete():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host='0.0.0.0', port=8888, debug=True)
