@@ -55,8 +55,13 @@ def edit_contact(id):
 
     :param id: Id from contact
     '''
-    form = ContactForm()
     my_contact = Contact.query.filter_by(id=id).first()
+    form = ContactForm(
+        name=my_contact.name,
+        surname=my_contact.surname,
+        email=my_contact.email,
+        phone=my_contact.phone
+    )
     if form.validate_on_submit():
         # Get form
         name = form.name.data
@@ -79,8 +84,7 @@ def edit_contact(id):
             flash('Error update contact.', 'danger')
     return render_template(
         'web/edit_contact.html',
-        form=form,
-        my_contact=my_contact)
+        form=form)
 
 
 @app.route("/contacts")
@@ -108,8 +112,6 @@ def search():
 def contacts_delete():
     '''
     Delete contact
-
-    :param id: Id from contact
     '''
     try:
         mi_contacto = Contact.query.filter_by(id=request.form['id']).first()

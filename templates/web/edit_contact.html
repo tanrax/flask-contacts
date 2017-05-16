@@ -4,34 +4,17 @@
 <h1>Edit contact</h1>
 <form method="post">
 	{{ form.csrf_token }}
-	<div class="form-group{%if form.name.errors %} has-error{% endif %}">
-		{{ form.name.label }} 
-		{{ form.name(class='form-control', value=my_contact.name) }}
-		{% for error in form.name.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.surname.errors %} has-error{% endif %}">
-		{{ form.surname.label }} 
-		{{ form.surname(class='form-control', value=my_contact.surname) }}
-		{% for error in form.surname.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.email.errors %} has-error{% endif %}">
-		{{ form.email.label }} 
-		{{ form.email(class='form-control', value=my_contact.email) }}
-		{% for error in form.email.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
-	<div class="form-group{%if form.phone.errors %} has-error{% endif %}">
-		{{ form.phone.label }} 
-		{{ form.phone(class='form-control', value=my_contact.phone) }}
-		{% for error in form.phone.errors %}
-			<span class="help-block">{{ error }}</span>
-		{% endfor %}
-	</div>
+	{% for field in form %}
+		{% if field.label.text != 'CSRF Token' %}
+		<div class="form-group{%if field.errors %} has-error{% endif %}">
+			{{ field.label }} 
+			{{ field(class='form-control') }}
+			{% for error in field.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %}
+		</div>
+		{% endif %}
+	{% endfor %}
 	<input type="submit" class="btn btn-success" value="Save">
 </form>
 {% endblock %}
