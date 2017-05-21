@@ -1,0 +1,7 @@
+.popover-content .btn-group {
+    display: flex;
+}
+
+.popover-content div.btn-group a {
+    display: block;
+}
