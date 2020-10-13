@@ -1,6 +1,8 @@
 from flask import Flask, redirect, url_for, render_template, request, flash
-from models import db, Contact
+from models import db, Contact, User
 from forms import ContactForm
+from flask_login import LoginManager, current_user, login_user, login_required
+
 
 # Flask
 app = Flask(__name__)
@@ -8,13 +10,46 @@ app.config['SECRET_KEY'] = 'my secret'
 app.config['DEBUG'] = False
 
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/book'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/hp'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
+# Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+password = 'sintow2020@'
+
+
+@login_manager.user_loader    
+#使用user_loader装饰器的回调函数非常重要，他将决定 user 对象是否在登录状态
+def user_loader(id):          
+    #这个id参数的值是在 login_user(user)中传入的 user 的 id 属性
+    user = User()
+    return user
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return '''
+        <form action="#" method="POST">
+            <span>请输入账号</span>
+            <input type="text" name="name" id="name" placeholder="name">
+            <span>请输入密码</span>
+            <input type="password" name="pw" id="pw" placeholder="password">
+            <input type="submit" name="submit">
+       </form>
+        '''
+    name = request.form.get('name')
+    if request.form.get('pw') == password:
+        user = User()
+        login_user(user)
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route("/")
+@login_required
 def index():
     '''
     Home page
@@ -23,6 +58,7 @@ def index():
 
 
 @app.route("/new_contact", methods=('GET', 'POST'))
+@login_required
 def new_contact():
     '''
     Create new contact
@@ -37,14 +73,15 @@ def new_contact():
             # User info
             flash('Contact created correctly', 'success')
             return redirect(url_for('contacts'))
-        except:
+        except Exception as ex:
             db.session.rollback()
-            flash('Error generating contact.', 'danger')
+            flash('Error generating contact. {}'.format(ex), 'danger')
 
     return render_template('web/new_contact.html', form=form)
 
 
 @app.route("/edit_contact/<id>", methods=('GET', 'POST'))
+@login_required
 def edit_contact(id):
     '''
     Edit contact
@@ -70,6 +107,7 @@ def edit_contact(id):
 
 
 @app.route("/contacts")
+@login_required
 def contacts():
     '''
     Show alls contacts
@@ -79,6 +117,7 @@ def contacts():
 
 
 @app.route("/search")
+@login_required
 def search():
     '''
     Search
@@ -91,6 +130,7 @@ def search():
 
 
 @app.route("/contacts/delete", methods=('POST',))
+@login_required
 def contacts_delete():
     '''
     Delete contact
@@ -108,4 +148,4 @@ def contacts_delete():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5002, debug=True)

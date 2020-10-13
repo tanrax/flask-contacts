@@ -5,10 +5,9 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th scope="col">Name</th>
-			<th scope="col">Surname</th>
-			<th scope="col">E-Mail</th>
-			<th scope="col">Phone</th>
+			<th scope="col">用户名</th>
+			<th scope="col">密码1（公开）</th>
+			<th scope="col">密码2（内部）</th>
 			<td></td>
 		</tr>
 	</thead>
@@ -16,16 +15,15 @@
 	{% for contact in contacts %}
 		<tr>
 			<td>{{ contact.name }}</td>
-			<td>{{ contact.surname }}</td>
-			<td>{{ contact.email }}</td>
-			<td>{{ contact.phone }}</td>
+			<td>{{ contact.password }}</td>
+			<td>{{ contact.password2 }}</td>
 			<td class="text-right">
 				<div class="row">
 					<form action="{{ url_for('contacts_delete') }}" method="post" class="pull-right">
 						<input type="hidden" name="id" value="{{ contact.id }}">
-						<input type="submit" class="btn btn-danger" data-toggle="confirmation" {# data-title="¿Estas seguro?" #} value="Delete">
+						<input type="submit" class="btn btn-danger" data-toggle="confirmation" {# data-title="¿Estas seguro?" #} value="删除"">
 					</form>
-					<a class="btn btn-primary pull-right" href="{{ url_for('edit_contact', id=contact.id) }}">Edit</a>
+					<a class="btn btn-primary pull-right" href="{{ url_for('edit_contact', id=contact.id) }}">修改</a>
 				</div>
 			</td>
 		</tr>

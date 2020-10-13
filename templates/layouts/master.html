@@ -19,18 +19,18 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		  </button>
-		  <a class="navbar-brand" href="/">Contact Manager</a>
+		  <a class="navbar-brand" href="/">用户管理</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<form action="{{ url_for('search') }}" method="get" class="navbar-form navbar-left">
 			<div class="form-group">
-			  <input type="text" name="name" class="form-control" placeholder="Name...">
+			  <input type="text" name="name" class="form-control" placeholder="请输入用户名...">
 			</div>
-			<button type="submit" class="btn btn-default">Search</button>
+			<button type="submit" class="btn btn-default">查询</button>
 		  </form>
 		  <ul class="nav navbar-nav navbar-right">
-			  <li><a href="{{ url_for('new_contact') }}">New</a></li>
-			  <li><a href="{{ url_for('contacts') }}">View contacts</a></li>
+			  <li><a href="{{ url_for('new_contact') }}">新建</a></li>
+			  <li><a href="{{ url_for('contacts') }}">阅览全部</a></li>
 		  </ul>
 		</div>
 	  </div>
