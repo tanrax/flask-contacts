@@ -1,0 +1,24 @@
+{% extends 'layouts/master.html' %}
+{% block title %}View{% endblock %}
+{% block body %}
+<h1>Contacts</h1>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th scope="col">公司名称</th>
+			<th scope="col">购买数量</th>
+			<th scope="col">单价</th>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+	{% for contact in contacts %}
+		<tr>
+			<td>{{ contact.name }}</td>
+			<td>{{ contact.number}}</td>
+			<td>{{ contact.price}}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
