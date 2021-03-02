@@ -1,22 +1,19 @@
 {% extends 'layouts/master.html' %}
 {% block title %}View{% endblock %}
 {% block body %}
-<h1>Contacts</h1>
+<h1>登录次数统计</h1>
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th scope="col">公司名称</th>
-			<th scope="col">咨询时间</th>
-			<th scope="col">咨询主题</th>
-			<td></td>
+			<th scope="col">账号</th>
+			<th scope="col">登录次数</th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for contact in contacts %}
 		<tr>
-			<td>{{ contact.name }}</td>
-			<td>{{ contact.date }}</td>
-			<td>{{ contact.subject }}</td>
+			<td>{{ contact['account'] }}</td>
+			<td>{{ contact['count'] }}</td>
 		</tr>
 	{% endfor %}
 	</tbody>

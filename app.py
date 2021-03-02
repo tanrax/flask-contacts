@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request, flash
-from models import db, Contact, User, Company, Trans, Inquery
-from forms import ContactForm, CompanyForm, TransForm, InqueryForm
+from models import db, Contact, User
+from forms import ContactForm
 from flask_login import LoginManager, current_user, login_user, login_required
 
 
@@ -149,79 +149,100 @@ def contacts_delete():
 @app.route("/test1", methods=('GET', 'POST'))
 @login_required
 def test1():
-    c1 = Company()
-    c1.name = '大连丰达海产品有限公司'
-    c1.city = '辽宁省大连市'
-    c1.date = '2018-09-02'
+    c1 = dict()
+    c1['account'] = '15120201012'
+    c1['ip'] = '23.14.234.12'
+    c1['location'] = '河南郑州'
+    c1['isp'] = '中国联通'
+    c1['cnt1'] = '3'
+    c1['cnt2'] = '2'
 
-    c2 = Company()
-    c2.name = '北京斯科特科技有限公司'
-    c2.city = '北京市'
-    c2.date = '2020-11-29'
+    c2 = dict()
+    c2['account'] = '15120210128'
+    c2['ip'] = '12.221.21.2'
+    c2['location'] = '广州深圳'
+    c2['isp'] = '中国联通'
+    c2['cnt1'] = '1'
+    c2['cnt2'] = '1'
 
-    c3 = Company()
-    c3.name = '大连罗森有限公司'
-    c3.city = '辽宁省大连市'
-    c3.date = '2020-12-22'
+    c3 = dict()
+    c3['account'] = '15220201214'
+    c3['ip'] = '122.23.11.25'
+    c3['location'] = '北京'
+    c3['isp'] = '中国电信'
+    c3['cnt1'] = '8'
+    c3['cnt2'] = '4'
 
-    companies = []
-    companies.append(c1)
-    companies.append(c2)
-    companies.append(c3)
+    data = []
+    data.append(c1)
+    data.append(c2)
+    data.append(c3)
 
-    return render_template('web/test1.html', contacts=companies)
+    return render_template('web/test1.html', contacts=data)
 
 @app.route("/test2", methods=('GET', 'POST'))
 @login_required
 def test2():
 
-    t1 = Trans()
-    t1.name = '大连丰达海产品有限公司'
-    t1.number = 1
-    t1.price = 3500
+    t1 = dict()
+    t1['account'] = '15220201027'
+    t1['login'] = '2021-02-28 12:16:23'
+    t1['duration'] = '41'
+    t1['total'] = '953'
 
-    t2 = Trans()
-    t2.name = '大连罗森有限公司'
-    t2.number = 3
-    t2.price = 3500
+    t2 = dict()
+    t2['account'] = '15220201214'
+    t2['login'] = '2021-02-22 09:23:51'
+    t2['duration'] = '342'
+    t2['total'] = '1234'
 
-    t3 = Trans()
-    t3.name = '大连罗森有限公司'
-    t3.number = 10
-    t3.price = 3000
+    t3 = dict()
+    t3['account'] = '15220210129'
+    t3['login'] = '2020-12-31 12:34:22'
+    t3['duration'] = '12'
+    t3['total'] = '31'
 
-    t4 = Trans()
-    t4.name = '大连丰达海产品有限公司'
-    t4.number = 5
-    t4.price = 3300
+    t4 = dict()
+    t4['account'] = '15320201030'
+    t4['login'] = '2021-01-03 20:12:34'
+    t4['duration'] = '434'
+    t4['total'] = '1356'
 
-    trans_list = []
-    trans_list.append(t1)
-    trans_list.append(t2)
-    trans_list.append(t3)
-    trans_list.append(t4)
+    data = []
+    data.append(t1)
+    data.append(t2)
+    data.append(t3)
+    data.append(t4)
 
-    return render_template('web/test2.html', contacts=trans_list)
+    return render_template('web/test2.html', contacts=data)
 
 @app.route("/test3", methods=('GET', 'POST'))
 @login_required
 def test3():
 
-    i1 = Inquery()
-    i1.name = '大连罗森有限公司'
-    i1.date = '2021-01-06'
-    i1.subject = '关于产品有效期问题'
+    d1 = dict()
+    d1['account'] = '15220210129'
+    d1['count'] = 9
 
-    i2 = Inquery()
-    i2.name = '大连罗森有限公司'
-    i2.date = '2021-01-11'
-    i2.subject = '关于产品售后支持'
+    d2 = dict()
+    d2['account'] = '15320201013'
+    d2['count'] = 22
 
-    inqueries = []
-    inqueries.append(i1)
-    inqueries.append(i2)
+    d3 = dict()
+    d3['account'] = '15320210302'
+    d3['count'] = 78
 
-    return render_template('web/test3.html', contacts=inqueries)
+    d4 = dict()
+    d4['account'] = '15220210129'
+    d4['count'] = 12
+
+    data = []
+    data.append(d1)
+    data.append(d2)
+    data.append(d3)
+    data.append(d4)
+
+    return render_template('web/test3.html', contacts=data)
 
 
 if __name__ == "__main__":

@@ -26,20 +26,3 @@ class User():
 
     def get_id(id):
         return 1
-
-class Company():
-    name = ''
-    city = ''
-    date = ''
-
-class Trans():
-    name = ''
-    date = ''
-    number = ''
-    price = ''
-
-class Inquery():
-    name = ''
-    date = ''
-    subject = ''
-

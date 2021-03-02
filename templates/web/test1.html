@@ -1,22 +1,27 @@
 {% extends 'layouts/master.html' %}
 {% block title %}View{% endblock %}
 {% block body %}
-<h1>Contacts</h1>
+<h1>IP登陆地统计</h1>
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th scope="col">公司名称</th>
-			<th scope="col">所在城市</th>
-			<th scope="col">登录日期</th>
-			<td></td>
+			<th scope="col">账号</th>
+			<th scope="col">上次登录IP</th>
+			<th scope="col">上次登陆地</th>
+			<th scope="col">运营商</th>
+			<th scope="col">登录IP地址统计（省）</th>
+			<th scope="col">登陆地统计（省）</th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for contact in contacts %}
 		<tr>
-			<td>{{ contact.name }}</td>
-			<td>{{ contact.city }}</td>
-			<td>{{ contact.date }}</td>
+			<td>{{ contact['account'] }}</td>
+			<td>{{ contact['ip'] }}</td>
+			<td>{{ contact['location'] }}</td>
+			<td>{{ contact['isp'] }}</td>
+			<td>{{ contact['cnt1'] }}</td>
+			<td>{{ contact['cnt2'] }}</td>
 		</tr>
 	{% endfor %}
 	</tbody>
