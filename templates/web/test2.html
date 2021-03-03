@@ -2,13 +2,15 @@
 {% block title %}View{% endblock %}
 {% block body %}
 <h1>登录时间统计</h1>
+<p>请选择日期（默认为当日）</p>
+<input id='inputDate' type="date" value=""/>
 <table class="table table-hover">
 	<thead>
 		<tr>
 			<th scope="col">账号</th>
-			<th scope="col">上次登录时间</th>
-			<th scope="col">上次登陆时长</th>
-			<th scope="col">总时长</th>
+			<th scope="col">本日最后登陆时间</th>
+			<th scope="col">最后登陆时长（分钟）</th>
+			<th scope="col">本日总登陆时长（分钟）</th>
 			<td></td>
 		</tr>
 	</thead>
@@ -23,4 +25,36 @@
 	{% endfor %}
 	</tbody>
 </table>
+<script type='text/javascript'>
+	window.onload=function(){
+		var inputDate = document.getElementById("inputDate");
+		inputDate.onchange = function(){
+			var selectedDate = inputDate.value;
+			setCookie('selectedDate', selectedDate, 1);
+			location.reload();
+		};
+		inputDate.value = getCookie('selectedDate');		
+	}
+
+	function setCookie(cname,cvalue,exdays)
+	{
+		var d = new Date();
+		d.setTime(d.getTime()+(exdays*24*60*60*1000));
+		var expires = "expires="+d.toGMTString();
+		document.cookie = cname + "=" + cvalue + "; " + expires;
+	}
+
+	function getCookie(cname)
+	{
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0; i<ca.length; i++) 
+		{
+			var c = ca[i].trim();
+			if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+		}
+		return "";
+	}
+</script>
+
 {% endblock %}
