@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for, render_template, request, flash
 from models import db, Contact, User
 from forms import ContactForm
 from flask_login import LoginManager, current_user, login_user, login_required
-import requests, random
+import random
 
 
 # Flask
