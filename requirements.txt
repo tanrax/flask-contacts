@@ -3,6 +3,6 @@ Flask==2.0.3
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.14.3
 gunicorn
-Werkzeug==2.0.3
+Werkzeug==2.2.3
 Jinja2==3.0.0
 email_validator
