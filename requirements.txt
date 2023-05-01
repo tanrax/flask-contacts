@@ -1,5 +1,5 @@
 Faker==0.7.11
-Flask==2.0.3
+Flask==2.3.2
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.14.3
 gunicorn
